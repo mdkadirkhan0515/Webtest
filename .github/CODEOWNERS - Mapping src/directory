@@ -1,0 +1,37 @@
+# CODEOWNERS - Defines who should review changes to specific paths
+# This file uses the same pattern syntax as .gitignore
+# Reference: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Default owner for everything
+* @your-username
+
+# Frontend source code - all changes need frontend team review
+/src/ @your-username @frontend-team
+
+# Critical admin panel - requires senior review
+/src/pages/admin/ @your-username @admin-team
+/src/components/admin/ @your-username @admin-team
+/src/routes/ProtectedRoute.jsx @your-username
+/src/services/authService.js @your-username
+
+# API services - backend contract sensitive
+/src/services/ @your-username @backend-team
+
+# User-facing pages - UX review
+/src/pages/user/ @your-username @frontend-team
+/src/components/product/ @your-username @frontend-team
+/src/components/common/ @your-username @frontend-team
+
+# Configuration files - DevOps review
+*.config.js @your-username @devops-team
+package.json @your-username @devops-team
+vite.config.js @your-username @devops-team
+tailwind.config.js @your-username @devops-team
+.env.example @your-username @devops-team
+
+# GitHub workflows - DevOps must review
+/.github/ @your-username @devops-team
+
+# Documentation
+*.md @your-username
+README.md @your-username @frontend-team
