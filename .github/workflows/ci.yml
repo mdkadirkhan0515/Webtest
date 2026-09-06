@@ -21,20 +21,20 @@ jobs:
         node-version: [18.x, 20.x]
 
     steps:
-            - name: Checkout repository
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-            - name: Setup Node.js ${{ matrix.node-version }}
+      - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: package-lock.json
 
-            - name: Install dependencies
+      - name: Install dependencies
         run: npm ci
 
-            - name: Check if lint script exists
+      - name: Check if lint script exists
         id: check-lint
         run: |
           if npm run | grep -q "lint"; then
@@ -43,23 +43,23 @@ jobs:
             echo "has_lint=false" >> $GITHUB_OUTPUT
           fi
 
-            - name: Run ESLint
+      - name: Run ESLint
         if: steps.check-lint.outputs.has_lint == 'true'
         run: npm run lint
         continue-on-error: false
 
-            - name: Run ESLint (fallback with npx)
+      - name: Run ESLint (fallback with npx)
         if: steps.check-lint.outputs.has_lint == 'false'
         run: npx eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0
         continue-on-error: true
 
-            - name: Build project
+      - name: Build project
         run: npm run build
         env:
           VITE_BACKEND_API_URL: ${{ secrets.VITE_BACKEND_API_URL || 'https://api.example.com/api' }}
           CI: true
 
-            - name: Check build output
+      - name: Check build output
         run: |
           if [ ! -d "dist" ]; then
             echo "Build failed - dist folder not found"
@@ -70,7 +70,7 @@ jobs:
           echo "Build files:"
           ls -lh dist/
 
-            - name: Upload build artifact
+      - name: Upload build artifact
         if: matrix.node-version == '20.x'
         uses: actions/upload-artifact@v4
         with:
