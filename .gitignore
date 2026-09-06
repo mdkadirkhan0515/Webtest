@@ -1,0 +1,10 @@
+node_modules
+dist
+build
+.vite
+.env
+.env.local
+npm-debug.log*
+.vscode
+.idea
+.DS_Store
